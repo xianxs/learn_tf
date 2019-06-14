@@ -2,6 +2,8 @@ import pandas as pd
 import numpy as np
 import tensorflow as tf
 
+from utils import get_data
+
 
 def crash_proof():
     """
@@ -16,17 +18,9 @@ def crash_proof():
     tf.keras.backend.set_session(session)
 
 
-from qi.tool.sql.rdl_sql_loader import sql_factor_loader
-
-price_type = 'prod.prices.close'
+price_type = 'close'
 symbol = '600000.SH'
-df = sql_factor_loader.get_data_symbol_date(
-    fields_=[price_type],
-    from_='20120101', to_='20190601', symbols_=[symbol], rename_=True
-)
-
-df.sort_values(by='date', inplace=True)
-df.reset_index(drop=True, inplace=True)
+df = get_data(symbol_=symbol)
 
 test_len = 120
 timesteps = 60
