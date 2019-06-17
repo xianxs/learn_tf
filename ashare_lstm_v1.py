@@ -1,22 +1,12 @@
+#####
+# example from 20190206-基于RNN和LSTM的股市预测方法
+#####
+
 import pandas as pd
 import numpy as np
-import tensorflow as tf
+
 
 from utils import get_data
-
-
-def crash_proof():
-    """
-    in case of GPU CUDA crashing
-    """
-    config = tf.ConfigProto(
-        gpu_options=tf.GPUOptions(per_process_gpu_memory_fraction=0.8)
-        # device_count = {'GPU': 1}
-    )
-    config.gpu_options.allow_growth = True
-    session = tf.Session(config=config)
-    tf.keras.backend.set_session(session)
-
 
 price_type = 'close'
 symbol = '600000.SH'

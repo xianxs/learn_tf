@@ -1,21 +1,16 @@
+#####
+# example from 20190211-严谨解决5种机器学习算法在预测股价的应用 - v1c_xgboost
+#####
+
 import math
-import matplotlib
 import numpy as np
 import pandas as pd
-import seaborn as sns
-import time
-
 import datetime
-from datetime import date
-from matplotlib import pyplot as plt
-from pylab import rcParams
 from sklearn.metrics import mean_squared_error
 from sklearn.preprocessing import StandardScaler
-from tqdm import tqdm_notebook
 from xgboost import XGBRegressor
 
 #### Input params ##################
-stk_path = "./VTI.csv"
 test_size = 0.2  # proportion of dataset to be used as test set
 cv_size = 0.2  # proportion of dataset to be used as cross-validation set
 N = 3  # for feature at day t, we use lags from t-1, t-2, ..., t-N as features

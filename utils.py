@@ -2,7 +2,7 @@ import os
 import pandas as pd
 
 from qi.tool.sql.rdl_sql_loader import sql_factor_loader
-
+import tensorflow as tf
 
 def get_data(
         symbol_: str = '600000.SH',
@@ -41,6 +41,21 @@ def get_data(
 
     df = pd.read_csv(file)
     return df
+
+
+
+
+def crash_proof():
+    """
+    in case of GPU CUDA crashing
+    """
+    config = tf.ConfigProto(
+        gpu_options=tf.GPUOptions(per_process_gpu_memory_fraction=0.8)
+        # device_count = {'GPU': 1}
+    )
+    config.gpu_options.allow_growth = True
+    session = tf.Session(config=config)
+    tf.keras.backend.set_session(session)
 
 
 if __name__ == '__main__':
