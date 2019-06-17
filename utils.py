@@ -7,10 +7,11 @@ from qi.tool.sql.rdl_sql_loader import sql_factor_loader
 def get_data(
         symbol_: str = '600000.SH',
         from_: str = '20120101',
-        to_: str = '20190601'
+        to_: str = '20190601',
+        resave_: bool = False
 ) -> pd.DataFrame:
     file = f'{symbol_}.csv'
-    if os.path.exists(file):
+    if os.path.exists(file) and not resave_:
         df = pd.read_csv(file)
     else:
         col_dict = {
@@ -24,7 +25,9 @@ def get_data(
             'prod.prices.adjlow': 'adjlow',
             'prod.prices.vwap': 'vwap',
             'prod.prices.adjvwap': 'adjvwap',
-            'prod.prices.factor': 'adjfactor'}
+            'prod.prices.factor': 'adjfactor',
+            'prod.prices.volume': 'volume',
+        }
 
         df = sql_factor_loader.get_data_symbol_date(
             fields_=list(col_dict.keys()),
@@ -35,4 +38,10 @@ def get_data(
         df.reset_index(drop=True, inplace=True)
         df.rename(columns=col_dict, inplace=True)
         df.to_csv(file, index=False)
+
+    df = pd.read_csv(file)
     return df
+
+
+if __name__ == '__main__':
+    get_data(resave_=True)

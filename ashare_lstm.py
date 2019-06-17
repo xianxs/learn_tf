@@ -53,7 +53,7 @@ print('here')
 from keras.models import load_model
 
 try:
-    regressor = load_model('t.h5')
+    regressor = load_model('ashare_lstm_test.h5')
 
 except:
     from keras.models import Sequential
